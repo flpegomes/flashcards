@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {default as Entypo} from 'react-native-vector-icons/Entypo';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
-import {default as Foundation} from 'react-native-vector-icons/Foundation';
-import {default as MaterialCommunityIcons} from 'react-native-vector-icons/MaterialIcons';
-import moment from 'moment'
 
 class SmallDeck extends Component {
     
