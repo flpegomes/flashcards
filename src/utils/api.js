@@ -1,8 +1,10 @@
 import { AsyncStorage } from 'react-native'
+import { listDecks } from '../actions';
 
 const STORAGE_KEY = '@FlashCards:StorageKey'
 
 export function addDeck( content, key) {
+    content.timestamp = Date.now()
     return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
         [key]: content
     }))
@@ -18,10 +20,4 @@ export function removeDeck(key) {
         })
 }
 
-export function listAllDecks() {
-    return AsyncStorage.getItem(STORAGE_KEY)
-        .then((results) => {
-            const data = JSON.parse(results);
-            return data;
-        })
-}
+

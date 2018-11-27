@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
-import { addDeck } from '../utils/api'
-
+import { NavigationActions } from 'react-navigation'
+import { addDeck, listAllDecks } from '../actions/index'
+import { connect } from 'react-redux'
 
 class NovoDeck extends Component {
 
@@ -16,7 +17,8 @@ class NovoDeck extends Component {
             questions: [],
             cards: 0,
             plays: 0,
-            score: '0/0'
+            score: '0/0',
+            timestamp: ''
         }
     }
 
@@ -31,8 +33,22 @@ class NovoDeck extends Component {
 
     adicionarBaralho = () => {
         const { content } = this.state
-        addDeck(content, content.title);
+
+        if(content.title.length > 4){
+            this.props.dispatch(addDeck(content, content.title))
+            this.toHome();
+        }
     }
+
+    deleta = () => {
+        AsyncStorage.clear('@FlashCards:StorageKey')
+    }
+
+    toHome = () => {
+        const backAction = NavigationActions.back();
+          this.props.navigation.dispatch(backAction);
+    }
+
 
     render() {
         const { title } = this.state.content
@@ -60,6 +76,14 @@ class NovoDeck extends Component {
                             <Text style={styles.buttonText}>ADICIONAR NOVO BARALHO</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.contentContainer}>
+                        <TouchableOpacity
+                            onPress={()=> this.deleta()}
+                            style={[styles.button, { backgroundColor: '#34D27C'} ]}
+                        >
+                            <Text style={styles.buttonText}>deleta</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
             
@@ -67,7 +91,7 @@ class NovoDeck extends Component {
     }
 }
 
-export default NovoDeck
+export default connect()(NovoDeck)
 
 const styles = StyleSheet.create({
     container: {

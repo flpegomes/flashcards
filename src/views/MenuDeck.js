@@ -4,14 +4,17 @@ import {default as Feather} from 'react-native-vector-icons/Feather';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
 import {default as Foundation} from 'react-native-vector-icons/Foundation';
 import {default as MaterialIcons} from 'react-native-vector-icons/MaterialIcons';
+import moment from 'moment'
 
 class MenuDeck extends Component {
     static navigationOptions = {
         title: 'Baralho selecionado'
     }
 
+
+
     render() {
-    console.log(this.props.navigation.state.params.data.item)
+        const { title, cards, score, plays, timestamp } = this.props.navigation.state.params;
         return (
             <View style={{backgroundColor: '#f7f9f9', flex:1}}>
                 <View style={styles.container}>
@@ -19,33 +22,35 @@ class MenuDeck extends Component {
                         <View style={styles.containerTitle}>
                                 <AntDesign name='info' style={{ elevation: 10 }} size={20} color='#454545' />
                                 <View>
-                                    <Text style={styles.textTitle}>Um dois tres {this.props.navigation.state.params.data.item}</Text>
-                                    <Text style={{ fontSize: 10, color:'#454545', paddingLeft: 2 }}> Baralho </Text>
+                                    <Text style={styles.textTitle}>{title} </Text>
+                                    <Text style={{ fontSize: 12, color:'#454545', paddingLeft: 2 }}> Baralho </Text>
                                 </View>  
                         </View>
-                        <Text style={styles.textCount}>12 de fevereiro de 2018</Text>
+                        
+                        <Text style={styles.textCount}>{moment(timestamp).format('DD/MM/YYYY')}</Text>
                     </View>
                     <View style={styles.content}> 
                         <View style={styles.contentCardNumber}>
                             <Text style={[styles.titleContent, { color: '#D3281F' }]}> CARTAS </Text>
                             <View style={{flexDirection:'row', paddingTop: 12}}>
                                 <Foundation name='page-multiple' style={{ elevation: 10 }} size={20} color='#D3281F' />
-                                <Text style={[styles.textContent, { color:'#D3281F', paddingLeft: 5, }]}> 10 </Text>
+                                <Text style={[styles.textContent, { color:'#D3281F', paddingLeft: 5, }]}> {cards} </Text>
                             </View>
                         </View>
                         <View style={styles.contentMaxScore}>
                             <Text style={[styles.titleContent, { color: '#0052C6' }]}>PONTUAÇÃO MAXIMA</Text>
                             <View style={{flexDirection:'row', paddingTop: 12}}>
                                 <Feather name='target' style={{ elevation: 10 }} size={20} color='#0052C6' />
-                                <Text style={[styles.textContent, { color:'#5dd460', paddingLeft: 5, }]}> 7</Text>
-                                <Text style={[styles.textContent, { color:'#0052C6' }]}>/10 </Text>
+                                {/* <Text style={[styles.textContent, { color:'#5dd460', paddingLeft: 5, }]}> </Text>
+                                <Text style={[styles.textContent, { color:'#0052C6' }]}>/10 </Text> */}
+                                <Text style={[styles.textContent, { color:'#0052C6', paddingLeft: 5, }]}>{score} </Text>
                             </View>
                         </View>
                         <View style={styles.contentCount}>
                             <Text style={[styles.titleContent, { color: '#FFA62B'}]}> JOGADAS </Text>
                             <View style={{flexDirection:'row', paddingTop: 12}}>
                                 <MaterialIcons name='replay' style={{ elevation: 10 }} size={20} color='#FFA62B' />
-                                <Text style={[styles.textContent, { color:'#FFA62B', paddingLeft: 5, }]}> 5 </Text>
+                                <Text style={[styles.textContent, { color:'#FFA62B', paddingLeft: 5, }]}> {plays} </Text>
                             </View>
                         </View>
             

@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 import Home from './views/Home'
+import Home1 from './views/Home'
 import MenuDeck from './views/MenuDeck'
 import NovoDeck from './views/NovoDeck'
 

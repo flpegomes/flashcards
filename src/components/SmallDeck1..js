@@ -65,8 +65,9 @@ class SmallDeck extends Component {
           
            
             return  (
-                <View>
-                        <Animated.View style={[styles.container, styles.flipCard, frontAnimatedStyle]}>
+                <TouchableOpacity onPress={() => this.flipCard()} >
+                    <View>
+                        <Animated.View style={[styles.container, styles.flipCard]}>
                             <View style={styles.header}>
                                 <View style={styles.containerTitle}>
                                         <AntDesign name='info' style={{ elevation: 10 }} size={20} color='#454545' />
@@ -119,7 +120,10 @@ class SmallDeck extends Component {
                                 <AntDesign name='arrowright' size={20} />
                             </View>
                         </Animated.View>
-    </View>              
+                    
+                </View>
+                </TouchableOpacity>
+                
             )          
            
         

@@ -21,6 +21,20 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.dispatch(listAllDecks())
+        this.animatedValue = new Animated.Value(0)
+        this.value = 0;
+        this.animatedValue.addListener(({value}) => {
+            this.value = value
+        })
+        this.frontInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['0deg', '180deg'  ],
+
+        })
+        this.backInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['180deg', '360deg']
+        })
     }
 
     goToMenuDeck = (data) => {
@@ -48,12 +62,41 @@ class Home extends Component {
         this.props.navigation.dispatch(navigateAction);
     }   
 
-
+    flipCard() {
+        if(this.value >= 90) {
+            Animated.spring(this.animatedValue, {
+                toValue: 0,
+                //duration: 800,
+                friction: 8,
+                tension: 10
+            }).start()
+        } 
+        else {
+            Animated.spring(this.animatedValue, {
+                toValue: 180,
+                //duration: 800,
+                friction: 8,
+                tension: 10
+            }).start()
+        }  
+    }
     
 
     render() {            
         const { decks } = this.props       
 
+        const frontAnimatedStyle = {
+            transform: [
+                { rotateX: this.frontInterpolate }
+            ]
+        }
+
+        const backAnimatedStyle = {
+            transform: [
+                { rotateX: this.backInterpolate }
+            ]
+        }  
+        
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this.goToNovoDeck() } style={styles.buttonAdd}>
@@ -68,7 +111,10 @@ class Home extends Component {
                     data={decks}
                     keyExtractor={(deck) => deck.title}
                     renderItem={(deck) => (
-                            <SmallDeck key={deck.item.title} deck={deck.item}/>  
+                        <Animated.View>
+                            <SmallDeck1 key={deck.item.title} deck={deck.item}/>  
+                        </Animated.View>
+                        
                     )}
                 />
                 : 
