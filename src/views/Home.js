@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Animated } from 'react-native'
-import SmallDeck from '../components/SmallDeck'
+import FrontDeck from '../components/FrontDeck'
 import { NavigationActions } from 'react-navigation'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import _ from 'lodash'
 import { sortList } from '../utils/helpers'
 import { listAllDecks  } from '../actions/index'
 import { connect } from 'react-redux'
-import ButtonsDeck from '../components/ButtonsDeck'
+import BackDeck from '../components/BackDeck'
+import FlipCard from 'react-native-flip-card' 
 
 class Home extends Component {
 
@@ -16,25 +17,12 @@ class Home extends Component {
     }
 
     state = {
-        selected: false
+        selecionado: 'N',
     }
 
     componentDidMount() {
         this.props.dispatch(listAllDecks())
-        this.animatedValue = new Animated.Value(0)
-        this.value = 0;
-        this.animatedValue.addListener(({value}) => {
-            this.value = value
-        })
-        this.frontInterpolate = this.animatedValue.interpolate({
-            inputRange: [0, 180],
-            outputRange: ['0deg', '180deg'  ],
-
-        })
-        this.backInterpolate = this.animatedValue.interpolate({
-            inputRange: [0, 180],
-            outputRange: ['180deg', '360deg']
-        })
+       
     }
 
     goToMenuDeck = (data) => {
@@ -47,11 +35,6 @@ class Home extends Component {
         this.props.navigation.dispatch(navigateAction);
     }
 
-    testeCard = () => {
-        this.setState({
-            selected: true
-        })
-    }
 
     goToNovoDeck = () => {
         const navigateAction = NavigationActions.navigate({
@@ -62,41 +45,18 @@ class Home extends Component {
         this.props.navigation.dispatch(navigateAction);
     }   
 
-    flipCard() {
-        if(this.value >= 90) {
-            Animated.spring(this.animatedValue, {
-                toValue: 0,
-                //duration: 800,
-                friction: 8,
-                tension: 10
-            }).start()
-        } 
-        else {
-            Animated.spring(this.animatedValue, {
-                toValue: 180,
-                //duration: 800,
-                friction: 8,
-                tension: 10
-            }).start()
-        }  
-    }
-    
-    
+    goToAddCard = () => {
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'AddCard',
+            action: NavigationActions.navigate({ routeName: 'AddCard' })
+        })
+
+        this.props.navigation.dispatch(navigateAction);
+    }   
 
     render() {            
         const { decks } = this.props 
 
-        const frontAnimatedStyle = {
-            transform: [
-                { rotateX: this.frontInterpolate }
-            ]
-        }
-
-        const backAnimatedStyle = {
-            transform: [
-                { rotateX: this.backInterpolate }
-            ]
-        }  
 
         return (
             <View style={styles.container}>
@@ -112,16 +72,19 @@ class Home extends Component {
                     data={decks}
                     keyExtractor={(deck) => deck.title}
                     renderItem={(deck) => (
-                        <View>
-                            <Animated.View style={[frontAnimatedStyle, styles.flipCard]}>
-                                <TouchableOpacity onPress={() => this.flipCard()} >
-                                    <SmallDeck key={deck.item.title} deck={deck.item}/>
-                                </TouchableOpacity>
-                            </Animated.View>
-                            <Animated.View style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
-                                <ButtonsDeck />
-                            </Animated.View>
-                        </View>
+                        <FlipCard 
+                            style={styles.card}
+                            friction={50}
+                            perspective={1000}
+                            flipHorizontal={false}
+                            flipVertical={true}
+                            clickable={true}
+                        >
+                            <FrontDeck key={deck.item.title} deck={deck.item} />
+                            <BackDeck key={deck.item.title} navigation={this.props.navigation}/>
+
+                        </FlipCard>
+
                               
                     )}
                 />
@@ -174,12 +137,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    flipCard: {
-        backfaceVisibility: 'hidden',
-    },
-    flipCardBack: {
-        position: 'absolute',
-        top: 0
-    },
+    card: {
+        borderWidth: 0,
+        marginBottom: 8,
+        marginTop: 8,
+        marginHorizontal: 12
+    }
 
 })

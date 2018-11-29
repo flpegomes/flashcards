@@ -6,14 +6,12 @@ import {default as MaterialIcons} from 'react-native-vector-icons/MaterialIcons'
 
 import moment from 'moment'
 
-class SmallDeck extends Component {
+class FrontDeck extends Component {
 
     render() {
     
         const { title, cards, plays, score, timestamp  } = this.props.deck 
-          
-           
-            return  (
+          return (
                     <View style={[styles.container]}>
                         <View style={styles.header}>
                             <View style={styles.containerTitle}>
@@ -48,25 +46,23 @@ class SmallDeck extends Component {
                                 </View>
                             </View>
                         </View> 
-                    </View>      
-
-            )          
+                    </View>     
+                
+            )
+            
            
         
     }
 }
 
-export default SmallDeck;
+export default FrontDeck;
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f9f9',
         height: 170,
-        marginHorizontal: 12,
-        marginTop: 16,
         borderRadius: 2,
         elevation: 2,
-        marginBottom: 8,
     },
     header: {
         flex:1,

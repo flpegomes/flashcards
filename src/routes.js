@@ -1,8 +1,9 @@
 import { createStackNavigator } from 'react-navigation';
 import Home from './views/Home'
-import Home1 from './views/Home'
 import MenuDeck from './views/MenuDeck'
 import NovoDeck from './views/NovoDeck'
+import AddCard from './views/AddCard'
+import BackDeck from './components/BackDeck'
 
 const Routes = createStackNavigator({
     Home : {
@@ -13,6 +14,12 @@ const Routes = createStackNavigator({
     },
     NovoDeck: {
         screen: NovoDeck
+    },
+    AddCard: {
+        screen: AddCard
+    },
+    BackDeck: {
+        screen: BackDeck
     }
 }, {
     navigationOptions: {
