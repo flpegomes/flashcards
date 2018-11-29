@@ -5,10 +5,10 @@ import { NavigationActions } from 'react-navigation'
 import { addDeck, listAllDecks } from '../actions/index'
 import { connect } from 'react-redux'
 
-class NovoDeck extends Component {
+class AddDeck extends Component {
 
     static navigationOptions = {
-        title: 'Adicionar Deck'
+        title: 'Adicionar baralho de estudos'
     }
 
     state = {
@@ -57,13 +57,13 @@ class NovoDeck extends Component {
                 <View style={styles.container}>
                     <View style={styles.headerContainer}>
                         <View style={{flexDirection:  'row', alignItems: 'center'}}>
-                            <AntDesign name='info' style={{ elevation: 10 }} size={20} color='#454545' />
-                            <Text style={styles.labelTitle}> Qual o nome do seu baralho?</Text>
+                            <AntDesign name='info' style={{ elevation: 10, marginRight: 10 }} size={20} color='#454545' />
+                            <Text style={styles.labelTitle}>Qual o nome do seu baralho de estudos?</Text>
                         </View>
                         
                         <TextInput 
                             style={styles.txtInputTitle}
-                            placeholder='Use um nome fácil para lembrar o conteúdo do baralho'
+                            placeholder='Dica: pode ser o assunto a ser estudado'
                             onChangeText={(title) => this.handleTitle(title)}
                             value={title}
                         />
@@ -71,7 +71,7 @@ class NovoDeck extends Component {
                     <View style={styles.contentContainer}>
                         <TouchableOpacity
                             onPress={()=> this.adicionarBaralho()}
-                            style={[styles.button, { backgroundColor: '#34D27C'} ]}
+                            style={[styles.button, { backgroundColor: '#5cb85c'} ]}
                         >
                             <Text style={styles.buttonText}>ADICIONAR NOVO BARALHO</Text>
                         </TouchableOpacity>
@@ -79,7 +79,7 @@ class NovoDeck extends Component {
                     <View style={styles.contentContainer}>
                         <TouchableOpacity
                             onPress={()=> this.deleta()}
-                            style={[styles.button, { backgroundColor: '#34D27C'} ]}
+                            style={[styles.button, { backgroundColor: '#5cb85c'} ]}
                         >
                             <Text style={styles.buttonText}>deleta</Text>
                         </TouchableOpacity>
@@ -91,7 +91,7 @@ class NovoDeck extends Component {
     }
 }
 
-export default connect()(NovoDeck)
+export default connect()(AddDeck)
 
 const styles = StyleSheet.create({
     container: {

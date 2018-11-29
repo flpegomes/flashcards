@@ -36,23 +36,15 @@ class Home extends Component {
     }
 
 
-    goToNovoDeck = () => {
+    goToAddDeck = () => {
         const navigateAction = NavigationActions.navigate({
-            routeName: 'NovoDeck',
-            action: NavigationActions.navigate({ routeName: 'NovoDeck' })
+            routeName: 'AddDeck',
+            action: NavigationActions.navigate({ routeName: 'AddDeck' })
         })
 
         this.props.navigation.dispatch(navigateAction);
     }   
 
-    goToAddCard = () => {
-        const navigateAction = NavigationActions.navigate({
-            routeName: 'AddCard',
-            action: NavigationActions.navigate({ routeName: 'AddCard' })
-        })
-
-        this.props.navigation.dispatch(navigateAction);
-    }   
 
     render() {            
         const { decks } = this.props 
@@ -60,7 +52,7 @@ class Home extends Component {
 
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.goToNovoDeck() } style={styles.buttonAdd}>
+                <TouchableOpacity onPress={() => this.goToAddDeck() } style={styles.buttonAdd}>
                     <View style={{flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
                         <AntDesign name='pluscircle' color='#3a5d8a' size={17}/>
                         <Text style={{color: '#3a5d8a', marginLeft: 10}}>CRIAR BARALHO</Text>
@@ -81,7 +73,7 @@ class Home extends Component {
                             clickable={true}
                         >
                             <FrontDeck key={deck.item.title} deck={deck.item} />
-                            <BackDeck key={deck.item.title} navigation={this.props.navigation}/>
+                            <BackDeck key={deck.item.title} title={deck.item.title} navigation={this.props.navigation}/>
 
                         </FlipCard>
 

@@ -2,7 +2,19 @@ export const ADD_DECK = 'ADD_DECK'
 export const LIST_DECKS = 'LIST_DECKS'
 
 import { AsyncStorage } from 'react-native'
+import _ from 'lodash'
 const STORAGE_KEY = '@FlashCards:StorageKey'
+
+export function getDeck(id) {
+    return dispatch => {
+        AsyncStorage.getItem(STORAGE_KEY)
+            .then((results) => {
+                let data = JSON.parse(results)
+                data = _.pick(data, ['title', id])
+                console.log(data)
+            })
+    }
+}
 
 export function listAllDecks() {
     return dispatch => {
