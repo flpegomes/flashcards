@@ -43,6 +43,8 @@ class AddCard extends Component {
 
     addCard = () => {
         this.props.dispatch(addNewQuestion(this.state.card, this.props.navigation.state.params))
+        
+        this.toHome()
     }
 
     deleta = () => {

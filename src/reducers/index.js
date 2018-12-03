@@ -1,5 +1,5 @@
-import { ADD_DECK, LIST_DECKS, ADD_CARD_TO_DECK, CURRENT_DECK } from '../actions'
-
+import { ADD_DECK, LIST_DECKS, ADD_CARD_TO_DECK, CURRENT_DECK, RESET_CURRENT_DECK } from '../actions'
+import _ from 'lodash'
 export const INITIAL_STATE = { }
 
 function decks (state = INITIAL_STATE , action) {
@@ -20,7 +20,8 @@ function decks (state = INITIAL_STATE , action) {
                 decks: {
                     ...state.decks,
                     ...action.decks       
-                }         
+                },
+                loaded: true         
             }
         case CURRENT_DECK: 
             console.log('current deck')
@@ -41,7 +42,7 @@ function decks (state = INITIAL_STATE , action) {
                     ...state.currentDeck.questions,
                     action.newCard
                 ],
-                cards: countCard + 1
+                cards: countCard + 1,
             }
             return {
                 ...state,
@@ -50,6 +51,13 @@ function decks (state = INITIAL_STATE , action) {
                     [state.currentDeck.title]: updateDeck
                 },
                 currentDeck: updateDeck
+            }
+        case RESET_CURRENT_DECK:             
+            return {
+                ...state, 
+                currentDeck: [],
+                decks: [],
+                loaded: false
             }
         default:
             return state

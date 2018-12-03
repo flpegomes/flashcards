@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Animated } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Animated, ActivityIndicator } from 'react-native'
 import FrontDeck from '../components/FrontDeck'
 import { NavigationActions } from 'react-navigation'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -16,25 +16,14 @@ class Home extends Component {
         title: 'Baralhos',  
     }
 
-    state = {
-        selecionado: 'N',
-    }
-
     componentDidMount() {
         this.props.dispatch(listAllDecks())
-       
+        console.log(this.props)
     }
 
-    goToMenuDeck = (data) => {
-        const navigateAction = NavigationActions.navigate({
-            routeName: 'MenuDeck',
-            action:  NavigationActions.navigate({ routeName: 'MenuDeck'}),
-            params: data  
-        });
-
-        this.props.navigation.dispatch(navigateAction);
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
     }
-
 
     goToAddDeck = () => {
         const navigateAction = NavigationActions.navigate({
@@ -51,6 +40,7 @@ class Home extends Component {
 
 
         return (
+            
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this.goToAddDeck() } style={styles.buttonAdd}>
                     <View style={{flexDirection:'row', justifyContent:'center', alignItems: 'center'}}>
@@ -59,34 +49,40 @@ class Home extends Component {
                     </View>
                     
                 </TouchableOpacity>
-                {decks.length >= 1 ? 
-                <FlatList
-                    data={decks}
-                    keyExtractor={(deck) => deck.title}
-                    renderItem={(deck) => (
-                        <FlipCard 
-                            style={styles.card}
-                            friction={50}
-                            perspective={1000}
-                            flipHorizontal={false}
-                            flipVertical={true}
-                            clickable={true}
-                        >
-                            <FrontDeck key={deck.item.title} deck={deck.item} />
-                            <BackDeck key={deck.item.title} title={deck.item.title} navigation={this.props.navigation}/>
+                {this.props.loaded ? (
+                    decks.length >= 1 ? (
+                    <FlatList
+                        data={decks}
+                        keyExtractor={(deck) => deck.title}
+                        renderItem={(deck) => (
+                            <FlipCard 
+                                style={styles.card}
+                                friction={50}
+                                perspective={1000}
+                                flipHorizontal={false}
+                                flipVertical={true}
+                                clickable={true}
+                            >
+                                <FrontDeck key={deck.item.title} deck={deck.item} />
+                                <BackDeck key={deck.item.title} title={deck.item.title} navigation={this.props.navigation}/>
 
-                        </FlipCard>
+                            </FlipCard>
 
-                              
-                    )}
-                />
-                : 
-                    <View style={styles.containerEmpty}>
-                        <Image source={require('../images/undraw_studying_s3l7.png')} resizeMode='contain' style={{width: 300, height: 300}}/>
-                        <Text style={{width: 300, color: '#999', textAlign: 'center'}}>OPS.... parece que você ainda não tem nenhum baralho de estudo.</Text>
-                    </View>
-                }
                                 
+                        )}
+                    />
+                    ) : (
+                        <View style={styles.containerEmpty}>
+                            <Image source={require('../images/undraw_studying_s3l7.png')} resizeMode='contain' style={{width: 300, height: 300}}/>
+                            <Text style={{width: 300, color: '#999', textAlign: 'center'}}>OPS.... parece que você ainda não tem nenhum baralho de estudo.</Text>
+                        </View>
+                    )
+                                
+            ) : (
+                <View style={{marginTop: 25}}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>    
+            )}
             </View>
         )
     }
@@ -96,11 +92,14 @@ function mapStateToProps(decks) {
     if(decks.decks)  {
         const data = sortList(_.values(decks.decks))  
         return {
-            decks: data
+            decks: data,
+            loaded: decks.loaded
         }
-    } 
-    return {
-        decks
+    } else {
+        return {
+            decks,
+            loaded: decks.loaded
+        }
     }
     
 }

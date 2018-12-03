@@ -5,6 +5,7 @@ import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
 import {default as Foundation} from 'react-native-vector-icons/Foundation';
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
+import { removeDeck } from '../actions/index'
 
 class BackDeck extends Component {
     goToAddCard = () => {
@@ -17,11 +18,15 @@ class BackDeck extends Component {
         this.props.navigation.dispatch(navigateAction);
     }   
 
+    deleteDeck = () => {
+        this.props.dispatch(removeDeck(this.props.title))
+    }
+
     render() {
         console.log(this.props.title)
             return  (
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.contentReset} onPress={() => console.log('é isso')}>
+                    <TouchableOpacity style={styles.contentDelete} onPress={() => this.deleteDeck()}>
                         <Text style={[styles.contentText, {color: '#6d1921' }]}>EXCLUIR BARALHO</Text>
                         <Entypo name='trash' size={25} color='#6d1921' />
                     </TouchableOpacity>
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
     },
-    contentReset: {
+    contentDelete: {
         flex:3,
         backgroundColor: '#dc3545',
         justifyContent: 'center',

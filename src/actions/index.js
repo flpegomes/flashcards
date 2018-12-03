@@ -2,6 +2,7 @@ export const ADD_DECK = 'ADD_DECK'
 export const LIST_DECKS = 'LIST_DECKS'
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
 export const CURRENT_DECK = 'CURRENT_DECK'
+export const RESET_CURRENT_DECK = 'RESET_CURRENT_DECK'
 
 import { AsyncStorage } from 'react-native'
 import _ from 'lodash'
@@ -16,6 +17,21 @@ export function getDeck(id) {
                 deck = _.valuesIn(deck)[0]
                 dispatch({type: CURRENT_DECK, deck })
             })
+    }
+}
+
+export function removeDeck(id) {
+    return dispatch => {
+        AsyncStorage.getItem(STORAGE_KEY)
+            .then((results) => {
+                let deck = JSON.parse(results)
+                deck[id] = undefined
+                delete deck[id]
+                AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(deck))
+                
+            })
+            .then(() => dispatch({type: RESET_CURRENT_DECK, id}))
+            .then(() => dispatch(listAllDecks()))            
     }
 }
 
