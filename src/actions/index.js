@@ -1,5 +1,7 @@
 export const ADD_DECK = 'ADD_DECK'
 export const LIST_DECKS = 'LIST_DECKS'
+export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
+export const CURRENT_DECK = 'CURRENT_DECK'
 
 import { AsyncStorage } from 'react-native'
 import _ from 'lodash'
@@ -9,9 +11,34 @@ export function getDeck(id) {
     return dispatch => {
         AsyncStorage.getItem(STORAGE_KEY)
             .then((results) => {
-                let data = JSON.parse(results)
-                data = _.pick(data, ['title', id])
-                console.log(data)
+                let deck = JSON.parse(results)
+                deck = _.pick(deck, ['title', id])
+                deck = _.valuesIn(deck)[0]
+                dispatch({type: CURRENT_DECK, deck })
+            })
+    }
+}
+
+export function addNewQuestion(card, id) {
+    const newCard = {
+        question: card.question,
+        answer: card.answer
+    }
+    
+    return dispatch => { 
+        AsyncStorage.getItem(STORAGE_KEY)
+            .then(decks => {
+                if(decks !== null) {
+                    decks = JSON.parse(decks)
+                    decks[id].questions = [
+                        ...decks[id].questions,
+                        newCard
+                    ]
+                    decks[id].cards = decks[id].cards + 1
+                    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks), () => 
+                        dispatch({type: ADD_CARD_TO_DECK, newCard}))
+                }
+
             })
     }
 }
@@ -20,33 +47,18 @@ export function listAllDecks() {
     return dispatch => {
         AsyncStorage.getItem(STORAGE_KEY)
         .then((results) => {
-            const data = JSON.parse(results);
-            dispatch(listDecks(data))
+            const decks = JSON.parse(results);
+            dispatch({type: LIST_DECKS, decks})
         })
     }
 }
 
-export function addDeck(content, key) {
-    content.timestamp = Date.now()
+export function addDeck(deck, key) {
+    deck.timestamp = Date.now()
     return dispatch => {
         AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
-            [key]: content
+            [key]: deck
         }))
-        .then(() => dispatch(addDeckR(content)))
+        .then(() => dispatch({type: ADD_DECK, deck}))
     } 
-}
-
-function addDeckR (deck) {
-    return {
-        type: ADD_DECK,
-        deck
-    }
-}
-
-function listDecks (decks) {
-
-    return {
-        type: LIST_DECKS,
-        decks
-    }
 }

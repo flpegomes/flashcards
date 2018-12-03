@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
 import { NavigationActions } from 'react-navigation'
-import { addDeck, getDeck } from '../actions/index'
+import { addDeck, getDeck, addNewQuestion } from '../actions/index'
 import { connect } from 'react-redux'
 
 class AddCard extends Component {
@@ -20,6 +20,7 @@ class AddCard extends Component {
 
     componentDidMount() {
         this.props.dispatch(getDeck(this.props.navigation.state.params))
+        console.log(this.props.currentDeck)
     }
 
     handleQuestion = (question) => {
@@ -41,7 +42,7 @@ class AddCard extends Component {
     }
 
     addCard = () => {
-        console.log(this.props.navigation.state.params)
+        this.props.dispatch(addNewQuestion(this.state.card, this.props.navigation.state.params))
     }
 
     deleta = () => {
@@ -92,7 +93,7 @@ class AddCard extends Component {
                         
                         <TouchableOpacity
                             onPress={()=> this.addCard()}
-                            style={[styles.button, { backgroundColor: '#34D27C'} ]}
+                            style={[styles.button, { backgroundColor: '#275b27'} ]}
                         >
                             <Text style={styles.buttonText}>ADICIONAR NOVA CARTA</Text>
                         </TouchableOpacity>
@@ -108,6 +109,14 @@ class AddCard extends Component {
             
         )
     }
+}
+
+function mapStateToProps(decks) {
+
+    return {
+        currentDeck: decks.currentDeck
+    }
+    
 }
 
 export default connect()(AddCard)

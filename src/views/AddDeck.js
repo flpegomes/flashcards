@@ -71,7 +71,7 @@ class AddDeck extends Component {
                     <View style={styles.contentContainer}>
                         <TouchableOpacity
                             onPress={()=> this.adicionarBaralho()}
-                            style={[styles.button, { backgroundColor: '#5cb85c'} ]}
+                            style={[styles.button, { backgroundColor: '#275b27'} ]}
                         >
                             <Text style={styles.buttonText}>ADICIONAR NOVO BARALHO</Text>
                         </TouchableOpacity>
@@ -79,7 +79,7 @@ class AddDeck extends Component {
                     <View style={styles.contentContainer}>
                         <TouchableOpacity
                             onPress={()=> this.deleta()}
-                            style={[styles.button, { backgroundColor: '#5cb85c'} ]}
+                            style={[styles.button, { backgroundColor: '#275b27'} ]}
                         >
                             <Text style={styles.buttonText}>deleta</Text>
                         </TouchableOpacity>
