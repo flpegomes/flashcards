@@ -18,6 +18,16 @@ class BackDeck extends Component {
         this.props.navigation.dispatch(navigateAction);
     }   
 
+    goToPlayQuiz = () => {
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'PlayQuiz',
+            action: NavigationActions.navigate({ routeName: 'PlayQuiz' }),
+            params: this.props.title
+        })
+
+        this.props.navigation.dispatch(navigateAction)
+    }
+
     deleteDeck = () => {
         this.props.dispatch(removeDeck(this.props.title))
     }
@@ -35,7 +45,7 @@ class BackDeck extends Component {
                         <Foundation name='page-multiple' style={{ elevation: 10 }} size={20} color='#275b27' />
 
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.contentPlay} onPress={() => console.log('é isso')}>
+                    <TouchableOpacity style={styles.contentPlay} onPress={() => this.goToPlayQuiz()}>
                         <Text style={[styles.contentText, {color: '#1b4366' }]}>COMEÇAR QUIZ</Text>
                         <Entypo name='controller-play' size={25} color='#1b4366' />
                     </TouchableOpacity>

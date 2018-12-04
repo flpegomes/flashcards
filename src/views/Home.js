@@ -18,12 +18,8 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.dispatch(listAllDecks())
-        console.log(this.props)
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-    }
 
     goToAddDeck = () => {
         const navigateAction = NavigationActions.navigate({

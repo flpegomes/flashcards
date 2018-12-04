@@ -34,7 +34,6 @@ function decks (state = INITIAL_STATE , action) {
             }
         case ADD_CARD_TO_DECK: 
             console.log('add_card_to_deck')
-            console.log(state)
             const countCard = state.currentDeck.cards
             const updateDeck = {
                 ...state.currentDeck,

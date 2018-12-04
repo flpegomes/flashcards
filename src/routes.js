@@ -1,15 +1,12 @@
 import { createStackNavigator } from 'react-navigation';
 import Home from './views/Home'
-import MenuDeck from './views/MenuDeck'
 import AddDeck from './views/AddDeck'
 import AddCard from './views/AddCard'
+import PlayQuiz from './views/PlayQuiz'
 
 const Routes = createStackNavigator({
     Home : {
         screen: Home,
-    },
-    MenuDeck : {
-        screen: MenuDeck,
     },
     AddDeck: {
         screen: AddDeck
@@ -17,6 +14,9 @@ const Routes = createStackNavigator({
     AddCard: {
         screen: AddCard
     },
+    PlayQuiz: {
+        screen: PlayQuiz
+    }
 }, {
     navigationOptions: {
         headerStyle: {
