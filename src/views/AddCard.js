@@ -20,7 +20,6 @@ class AddCard extends Component {
 
     componentDidMount() {
         this.props.dispatch(getDeck(this.props.navigation.state.params))
-        console.log(this.props.currentDeck)
     }
 
     handleQuestion = (question) => {

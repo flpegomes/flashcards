@@ -33,7 +33,6 @@ class BackDeck extends Component {
     }
 
     render() {
-        console.log(this.props.title)
             return  (
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.contentDelete} onPress={() => this.deleteDeck()}>

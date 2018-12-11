@@ -1,19 +1,39 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import {default as Entypo} from 'react-native-vector-icons/Entypo';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
-import {default as Foundation} from 'react-native-vector-icons/Foundation';
-import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { removeDeck } from '../actions/index'
 
 class FrontQuiz extends Component {
 
     render() {
-        console.log(this.props.title)
             return  (
                 <View style={styles.container}>
-
+                    <View style={styles.contentContainer}>
+                        <View style={{flex:3}}>
+                            <View style={{flexDirection:  'row', alignItems: 'center'}}>
+                                <AntDesign name='info' style={{ elevation: 10 }} size={20} color='#454545' />
+                                <Text style={styles.labelTitle}>Pergunta:</Text>
+                            </View>
+                            <Text style={[styles.labelQuestion]}>{this.props.question}</Text>
+                            <Text style={styles.hintInput}>Depois de responder mentalmente, clique na carta para ver a resposta correta.</Text>
+                        </View>
+                            
+                        <View style={{flexDirection:'row', flex: 1}}>
+                            <TouchableOpacity
+                                onPress={()=> {}}
+                                style={[styles.button, { backgroundColor: '#5cb85c'} ]}
+                            >
+                                <Text style={styles.buttonText}>ACERTEI</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={()=> {}}
+                                style={[styles.button, { backgroundColor: '#dc3545'} ]}
+                            >
+                                <Text style={styles.buttonText}>ERREI</Text>
+                            </TouchableOpacity>
+                        </View>
+                           
+                    </View>
                 </View>
             )          
            
@@ -33,43 +53,49 @@ export default connect(mapStateToProps)(FrontQuiz);
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#6d1921',
-        height: 170,
+        backgroundColor: '#f7f9f9',
+        height: 400,
         borderRadius: 4,
         elevation: 2,
-        flexDirection: 'row',
 
     },
-    contentDelete: {
-        flex:3,
-        backgroundColor: '#dc3545',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentAdd: {
-        flex:3,
-        backgroundColor: '#5cb85c',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentPlay: {
-        flex:3,
-        backgroundColor: '#337ab7',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentBack: {
+    contentContainer: {
         flex: 1,
-        backgroundColor: '#ccc',
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 36
+    },
+    labelTitle: {
+        color: '#454545',
+        fontSize: 20,    
+    },
+    labelQuestion: {
+        color: '#454545',
+        fontSize: 24, 
+        fontWeight: '900'   
+    },
+    hintInput: {
+        fontSize: 12,
+        color: '#aaa',
+        marginTop: 12,
+        textAlign: 'left'
 
     },
-    contentText: {
-        fontSize: 12,
-        fontWeight: '700',
-        textAlign: 'center',
-        paddingBottom: 12,
-        paddingHorizontal: 8
-    }
+    button: {
+        height: 40,
+        borderRadius: 50,
+        paddingVertical: 16,
+        paddingHorizontal: 32,
+        marginTop: 24,
+        justifyContent: 'center',
+        alignItems:'center',
+        flex:1,
+        marginHorizontal: 4
+         
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: '900',
+        fontSize: 14
+    },  
+
 })

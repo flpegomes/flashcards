@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import {default as Entypo} from 'react-native-vector-icons/Entypo';
+import { View, Text, StyleSheet } from 'react-native';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
-import {default as Foundation} from 'react-native-vector-icons/Foundation';
-import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { removeDeck } from '../actions/index'
 
-class FrontQuiz extends Component {
+class BackQuiz extends Component {
 
     render() {
-        console.log(this.props.title)
             return  (
                 <View style={styles.container}>
+                    <View style={styles.contentContainer}>
 
+                        <View style={{flex:1, justifyContent: 'center'}}>
+                            <View style={{flexDirection:  'row', alignItems: 'center'}}>
+                                <AntDesign name='info' style={{ elevation: 10 }} size={20} color='#454545' />
+                                <Text style={styles.labelTitle}>Resposta:</Text>
+                            </View>
+                            <Text style={[styles.labelQuestion]}>{this.props.answer}</Text>
+                            <Text style={styles.hintInput}>Caso queira voltar para a pergunta, basta clicar na carta novamente.</Text>
+                        </View>
+                           
+                    </View>
                 </View>
             )          
            
@@ -29,47 +35,53 @@ function mapStateToProps({decks}) {
 }
 
 
-export default connect(mapStateToProps)(FrontQuiz);
+export default connect(mapStateToProps)(BackQuiz);
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#000',
-        height: 170,
+        backgroundColor: '#e7e9e9',
+        height: 400,
         borderRadius: 4,
         elevation: 2,
-        flexDirection: 'row',
 
     },
-    contentDelete: {
-        flex:3,
-        backgroundColor: '#dc3545',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentAdd: {
-        flex:3,
-        backgroundColor: '#5cb85c',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentPlay: {
-        flex:3,
-        backgroundColor: '#337ab7',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    contentBack: {
+    contentContainer: {
         flex: 1,
-        backgroundColor: '#ccc',
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 36
+    },
+    labelTitle: {
+        color: '#454545',
+        fontSize: 20,    
+    },
+    labelQuestion: {
+        color: '#454545',
+        fontSize: 24, 
+        fontWeight: '900'   
+    },
+    hintInput: {
+        fontSize: 12,
+        color: '#aaa',
+        marginTop: 12,
+        textAlign: 'left'
 
     },
-    contentText: {
-        fontSize: 12,
-        fontWeight: '700',
-        textAlign: 'center',
-        paddingBottom: 12,
-        paddingHorizontal: 8
-    }
+    button: {
+        height: 40,
+        borderRadius: 50,
+        paddingVertical: 16,
+        paddingHorizontal: 32,
+        marginTop: 24,
+        justifyContent: 'center',
+        alignItems:'center',
+        flex:1,
+        marginHorizontal: 4
+         
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: '900',
+        fontSize: 14
+    },  
+
 })

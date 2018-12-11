@@ -1,6 +1,6 @@
 import { ADD_DECK, LIST_DECKS, ADD_CARD_TO_DECK, CURRENT_DECK, RESET_CURRENT_DECK } from '../actions'
 import _ from 'lodash'
-export const INITIAL_STATE = { }
+export const INITIAL_STATE = { loaded : false }
 
 function decks (state = INITIAL_STATE , action) {
     switch(action.type) {
@@ -30,7 +30,8 @@ function decks (state = INITIAL_STATE , action) {
                 decks: {
                     ...state.decks
                 },
-                currentDeck: action.deck 
+                currentDeck: action.deck,
+                loaded: true
             }
         case ADD_CARD_TO_DECK: 
             console.log('add_card_to_deck')
