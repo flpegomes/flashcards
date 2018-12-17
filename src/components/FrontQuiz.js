@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {default as AntDesign} from 'react-native-vector-icons/AntDesign';
 import { connect } from 'react-redux'
+import { correctAnswer, wrongAnswer } from '../actions/index'
 
 class FrontQuiz extends Component {
 
@@ -20,13 +21,13 @@ class FrontQuiz extends Component {
                             
                         <View style={{flexDirection:'row', flex: 1}}>
                             <TouchableOpacity
-                                onPress={()=> {}}
+                                onPress={()=> this.props.dispatch(correctAnswer())}
                                 style={[styles.button, { backgroundColor: '#5cb85c'} ]}
                             >
                                 <Text style={styles.buttonText}>ACERTEI</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={()=> {}}
+                                onPress={()=> this.props.dispatch(wrongAnswer())}
                                 style={[styles.button, { backgroundColor: '#dc3545'} ]}
                             >
                                 <Text style={styles.buttonText}>ERREI</Text>

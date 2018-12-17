@@ -10,7 +10,7 @@ class FrontDeck extends Component {
 
     render() {
     
-        const { title, cards, plays, score, timestamp  } = this.props.deck 
+        const { title, cards, plays, timestamp  } = this.props.deck 
           return (
                     <View style={[styles.container]}>
                         <View style={styles.header}>
@@ -30,12 +30,6 @@ class FrontDeck extends Component {
                                 <View style={{flexDirection:'row', paddingTop: 12}}>
                                     <Foundation name='page-multiple' style={{ elevation: 10 }} size={20} color='#D3281F' />
                                     <Text style={[styles.textContent, { color:'#D3281F', paddingLeft: 5, }]}> {cards} </Text>
-                                </View>
-                            </View>
-                            <View style={styles.contentMaxScore}>
-                                <Text style={[styles.titleContent, { color: '#0052C6' }]}>PONTUAÇÃO MAXIMA</Text>
-                                <View style={{flexDirection:'row', paddingTop: 12}}>
-                                    <Text style={[styles.textContent, { color:'#0052C6', paddingLeft: 5, }]}>{score} </Text>
                                 </View>
                             </View>
                             <View style={styles.contentCount}>

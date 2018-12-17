@@ -99,12 +99,6 @@ class AddCard extends Component {
                             <Text style={styles.buttonText}>ADICIONAR NOVA CARTA</Text>
                         </TouchableOpacity>
                     </View>
-                        <TouchableOpacity
-                            onPress={()=> this.deleta()}
-                            style={[styles.button, { backgroundColor: '#34D27C'} ]}
-                        >
-                            <Text style={styles.buttonText}>deleta</Text>
-                        </TouchableOpacity>
                 </View>
             </View>
             

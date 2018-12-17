@@ -17,7 +17,6 @@ class AddDeck extends Component {
             questions: [],
             cards: 0,
             plays: 0,
-            score: '0/0',
             timestamp: ''
         }
     }
@@ -34,7 +33,7 @@ class AddDeck extends Component {
     adicionarBaralho = () => {
         const { content } = this.state
 
-        if(content.title.length > 4){
+        if(content.title.length >= 2){
             this.props.dispatch(addDeck(content, content.title))
             this.toHome();
         }
@@ -56,17 +55,19 @@ class AddDeck extends Component {
             <View style={{backgroundColor: '#f7f9f9', flex:1}}>
                 <View style={styles.container}>
                     <View style={styles.headerContainer}>
-                        <View style={{flexDirection:  'row', alignItems: 'center'}}>
+                        <View style={{flexDirection:  'row', alignItems: 'center', flex:1}}>
                             <AntDesign name='info' style={{ elevation: 10, marginRight: 10 }} size={20} color='#454545' />
                             <Text style={styles.labelTitle}>Qual o nome do seu baralho de estudos?</Text>
-                        </View>
-                        
+
+                        </View>                        
                         <TextInput 
                             style={styles.txtInputTitle}
                             placeholder='Dica: pode ser o assunto a ser estudado'
                             onChangeText={(title) => this.handleTitle(title)}
                             value={title}
                         />
+                        <Text style={styles.hintInput} >O nome do baralho deve ter no mínimo 2 caracteres.</Text>
+
                     </View>
                     <View style={styles.contentContainer}>
                         <TouchableOpacity
@@ -76,14 +77,7 @@ class AddDeck extends Component {
                             <Text style={styles.buttonText}>ADICIONAR NOVO BARALHO</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.contentContainer}>
-                        <TouchableOpacity
-                            onPress={()=> this.deleta()}
-                            style={[styles.button, { backgroundColor: '#275b27'} ]}
-                        >
-                            <Text style={styles.buttonText}>deleta</Text>
-                        </TouchableOpacity>
-                    </View>
+
                 </View>
             </View>
             
@@ -124,6 +118,7 @@ const styles = StyleSheet.create({
     labelTitle: {
         color: '#454545',
         fontSize: 20,    
+        flex:1
     },
     button: {
         height: 40,
@@ -139,5 +134,12 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         fontSize: 14
     },  
+    hintInput: {
+        fontSize: 12,
+        color: '#aaa',
+        fontWeight: '500',
+        marginTop: 4,
+        textAlign: 'center'
+    }
 
 })
